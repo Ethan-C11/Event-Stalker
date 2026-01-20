@@ -1,5 +1,9 @@
 {
 	"token": "",
 	"clientId": "",
-    "guildId": ""
+    "guildId": "",
+
+      "helloAssoClientId" : "",
+      "helloAssoClienSecret" : "",
+      "helloAssoUrl" : ""
 }
