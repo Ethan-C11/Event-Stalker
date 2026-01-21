@@ -38,7 +38,6 @@ module.exports = {
 
             const jsonResponse = await res.json();
             const forms = jsonResponse.data;
-            console.log(forms)
 
             if (!forms || forms.length === 0) {
                 return interaction.editReply("Aucun événement public trouvé pour cette association.");
