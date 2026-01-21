@@ -1,6 +1,7 @@
 class EventDTO {
     constructor(data) {
         this.title = data.title;
+        this.organizationSlug = data.organizationSlug;
         this.description = data.description;
         this.url = data.url;
         this.formSlug = data.formSlug;

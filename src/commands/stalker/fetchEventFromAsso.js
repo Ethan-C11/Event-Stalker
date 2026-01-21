@@ -47,9 +47,14 @@ module.exports = {
             const embeds = forms.slice(0, 5).map(formData => {
                 const event = new EventDTO(formData);
 
+                const formattedSlug = event.organizationSlug
+                    .split('-')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+
                 return new EmbedBuilder()
                     .setAuthor({
-                        name: "Event Stalker",
+                        name: formattedSlug,
                         iconURL: "https://i.imgur.com/soSow0B.png",
                     })
                     .setTitle(event.title || event.slug) // Utilise le titre du DTO
