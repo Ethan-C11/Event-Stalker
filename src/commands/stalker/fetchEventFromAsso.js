@@ -1,45 +1,80 @@
 const { getTokens } = require("../../handlers/api-auth/helloAssoAuth");
-const { SlashCommandBuilder } = require('discord.js');
-const { HELLOASSO_URL} = process.env;
-
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const EventDTO = require("../../objects/dtos/eventDto");
+require('dotenv').config();
+const { HELLOASSO_URL } = process.env;
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('fetch-events-helloasso')
-        .setDescription('Fetch all active and public event from one HelloAsso association')
+        .setDescription('Fetch all active and public events from one HelloAsso association')
         .addStringOption((option) =>
-            option.setName('assocation-slug')
-                .setDescription("Slug of your association (ex: https://www.helloasso.com/associations/this-is-your-slug)")
+            option.setName('association-slug') // Correction typo: association
+                .setDescription("Slug of your association")
                 .setRequired(true)
         ),
 
     async execute(interaction) {
-        const {access_token, refresh_token, token_type} = await getTokens()
-        const slug = interaction.options.getString('assocation-slug')
+        await interaction.deferReply();
 
-        const url = HELLOASSO_URL + `/v5/organizations/${slug}/forms?formTypes=Event&states=Public&pageIndex=1&pageSize=20`;
-
-        const options = {
-            method: 'GET',
-            headers: {
-                'accept': 'application/json',
-                'Authorization': `Bearer ${access_token}` // Injection du token ici
+        try {
+            const tokens = await getTokens();
+            if (!tokens || !tokens.access_token) {
+                return interaction.editReply("Impossible de récupérer le token d'accès HelloAsso.");
             }
-        };
 
-        const res = await fetch(url, options)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`Erreur HTTP: ${res.status}`);
+            const slug = interaction.options.getString('association-slug');
+            const url = `${HELLOASSO_URL}/v5/organizations/${slug}/forms?formTypes=Event&states=Public&pageIndex=1&pageSize=20`;
+
+            const res = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${tokens.access_token}`
                 }
-                return res.json();
-            })
-            .then(json => {
-                console.log(json.data)
-                return json.data
-            })
-            .catch(err => console.error('Erreur lors de la requête :', err));
-        console.log(res)
-        return interaction.reply(JSON.stringify(res[0], null, 2))
+            });
+
+            if (!res.ok) throw new Error(`Erreur HTTP HelloAsso: ${res.status}`);
+
+            const jsonResponse = await res.json();
+            const forms = jsonResponse.data;
+            console.log(forms)
+
+            if (!forms || forms.length === 0) {
+                return interaction.editReply("Aucun événement public trouvé pour cette association.");
+            }
+
+            const embeds = forms.slice(0, 5).map(formData => {
+                const event = new EventDTO(formData);
+
+                return new EmbedBuilder()
+                    .setAuthor({
+                        name: "Event Stalker",
+                        iconURL: "https://i.imgur.com/soSow0B.png",
+                    })
+                    .setTitle(event.title || event.slug) // Utilise le titre du DTO
+                    .setURL(event.url)
+                    .setDescription(event.description || "Pas de description")
+                    .addFields(
+                        {
+                                name: "Lien vers l'évènement :",
+                                value: event.url,
+                                inline: false
+                            },
+                            {
+                                name: "Date de création",
+                                value: event.meta.createdAt ? event.meta.createdAt.toLocaleString() : "Inconnue",
+                                inline: false
+                    })
+                    .setColor("#00ff55")
+                    .setTimestamp();
+            });
+
+            return interaction.editReply({ embeds: embeds });
+
+        } catch (error) {
+            console.error(error);
+            return interaction.editReply(`Une erreur est survenue : ${error.message}`);
+        }
     },
 };
