@@ -6,7 +6,7 @@ async function getTokens() {
         throw new Error('Variables d\'environnement HelloAsso non définies');
     }
 
-    const url = `${HELLOASSO_URL}/token`;
+    const url = `${HELLOASSO_URL}/oauth2/token`;
 
     const params = new URLSearchParams();
     params.append('grant_type', 'client_credentials');
