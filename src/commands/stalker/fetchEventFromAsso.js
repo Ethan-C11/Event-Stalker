@@ -60,16 +60,9 @@ module.exports = {
                     .setURL(event.url)
                     .setDescription(event.description || "Pas de description")
                     .addFields(
-                        {
-                                name: "Lien vers l'évènement :",
-                                value: event.url,
-                                inline: false
-                            },
-                            {
-                                name: "Date de création",
-                                value: event.meta.createdAt ? event.meta.createdAt.toLocaleString() : "Inconnue",
-                                inline: false
-                    })
+                        { name: "Lien vers l'évènement :", value: event.url, inline: false},
+                            { name: "Date de création", value: event.meta.createdAt ? event.meta.createdAt.toLocaleString() : "Inconnue", inline: false
+                            })
                     .setColor("#00ff55")
                     .setTimestamp();
             });
