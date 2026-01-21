@@ -1,4 +1,4 @@
-const { HelloAssoTokenDto } = require("../../objects/dtos/helloAssoTokenDto");
+require('dotenv').config();
 const { HELLOASSO_URL, HELLOASSO_CLIENT_ID, HELLOASSO_CLIENT_SECRET} = process.env;
 
 async function getTokens() {
@@ -6,38 +6,40 @@ async function getTokens() {
         throw new Error('Variables d\'environnement HelloAsso non définies');
     }
 
-    const url = `${HELLOASSO_URL}/token`;
+    const baseUrl = HELLOASSO_URL;
+    const url = `${baseUrl}/oauth2/token`;
 
     const params = new URLSearchParams();
-    params.append('grant_type', 'client_credentials');
     params.append('client_id', HELLOASSO_CLIENT_ID);
     params.append('client_secret', HELLOASSO_CLIENT_SECRET);
-
-    const options = {
-        method: 'POST',
-        headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: params
-    };
+    params.append('grant_type', 'client_credentials');
 
     try {
-        const res = await fetch(url, options);
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+            },
+            body: params
+        });
+
+        const textResponse = await res.text();
 
         if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(`Erreur HelloAsso: ${res.status} - ${JSON.stringify(errorData)}`);
+            console.error(`Détails de l'erreur (${res.status}):`, textResponse);
+            throw new Error(`Erreur HTTP ${res.status}: ${textResponse}`);
         }
 
-        const data = await res.json();
+        // On ne parse que si on est sûr que c'est du succès
+        const data = JSON.parse(textResponse);
         console.log('Tokens récupérés avec succès');
         return data;
+
     } catch (err) {
-        console.error('Erreur lors de la récupération du token:', err);
+        console.error('Erreur critique getTokens:', err.message);
         throw err;
     }
 }
 
 module.exports = { getTokens };
-
