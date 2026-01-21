@@ -1,12 +1,13 @@
+const { getTokens } = require("../../handlers/api-auth/helloAssoAuth");
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('ping')
-        .setDescription('Replies with Pong!'),
-
+        .setName('check-hello-asso')
+        .setDescription('Check the status of HelloAsso'),
     async execute(interaction) {
-        console.log("pong")
-        await interaction.reply('Pong!');
+        const callApi = await getTokens()
+        if (callApi) return interaction.reply("HelloAsso est OK")
+        else return interaction.reply("HelloAsso est KO")
     },
 };
