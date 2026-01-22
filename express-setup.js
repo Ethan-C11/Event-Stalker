@@ -1,3 +1,5 @@
+const {webhooksInterceptionHandler} = require("./src/handlers/webhooksInterceptionHandler");
+
 function expressSetup() {
     const express = require("express")
     const bodyParser = require("body-parser")
@@ -12,7 +14,7 @@ function expressSetup() {
     });
 
     app.post("/hook", (req, res) => {
-        console.log(req.body)
+        webhooksInterceptionHandler(req.body)
         res.status(200).json("Message reçu").end()
     })
 
