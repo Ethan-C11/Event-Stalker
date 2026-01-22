@@ -1,8 +1,7 @@
 const { getTokens } = require("../../handlers/api-auth/helloAssoAuth");
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const EventDetailsDTO = require("../../objects/dtos/eventDetailsDto");
-require('dotenv').config();
-const { HELLOASSO_URL } = process.env;
+const {helloAssoUrl} = require("../../../config");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -30,7 +29,7 @@ module.exports = {
 
             const associationSlug = interaction.options.getString('association-slug');
             const eventSlug = interaction.options.getString('event-slug');
-            const url = `${HELLOASSO_URL}/v5/organizations/${associationSlug}/forms/Event/${eventSlug}/public`;
+            const url = `${helloAssoUrl}/v5/organizations/${associationSlug}/forms/Event/${eventSlug}/public`;
 
             const res = await fetch(url, {
                 method: 'GET',

@@ -1,17 +1,17 @@
-require('dotenv').config();
-const { HELLOASSO_URL, HELLOASSO_CLIENT_ID, HELLOASSO_CLIENT_SECRET} = process.env;
+const {helloAssoUrl,
+    helloAssoClientId,
+    helloAssoClientSecret} = require("../../../config");
 
 async function getTokens() {
-    if (!HELLOASSO_URL || !HELLOASSO_CLIENT_ID || !HELLOASSO_CLIENT_SECRET) {
+    if (!helloAssoUrl || !helloAssoClientId || !helloAssoClientSecret) {
         throw new Error('Variables d\'environnement HelloAsso non définies');
     }
 
-    const baseUrl = HELLOASSO_URL;
-    const url = `${baseUrl}/oauth2/token`;
+    const url = `${helloAssoUrl}/oauth2/token`;
 
     const params = new URLSearchParams();
-    params.append('client_id', HELLOASSO_CLIENT_ID);
-    params.append('client_secret', HELLOASSO_CLIENT_SECRET);
+    params.append('client_id', helloAssoClientId);
+    params.append('client_secret', helloAssoClientSecret);
     params.append('grant_type', 'client_credentials');
 
     try {

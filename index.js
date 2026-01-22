@@ -1,14 +1,11 @@
 const fs = require('node:fs');
 const path = require('node:path');
-require('dotenv').config();
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const {deployCommands} = require("./deploy-commands");
-const { token } = process.env;
+const { token, internalPort } = require('./config')
 
 
 deployCommands()
-
-
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 

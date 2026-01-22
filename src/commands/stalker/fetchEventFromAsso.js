@@ -1,8 +1,7 @@
 const { getTokens } = require("../../handlers/api-auth/helloAssoAuth");
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const EventDTO = require("../../objects/dtos/eventDto");
-require('dotenv').config();
-const { HELLOASSO_URL } = process.env;
+const {helloAssoUrl} = require("../../../config");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -23,8 +22,7 @@ module.exports = {
                 return interaction.editReply("Impossible de récupérer le token d'accès HelloAsso.");
             }
 
-            const slug = interaction.options.getString('association-slug');
-            const url = `${HELLOASSO_URL}/v5/organizations/${slug}/forms?formTypes=Event&states=Public&pageIndex=1&pageSize=20`;
+            const url = `${helloAssoUrl}/v5/organizations/${slug}/forms?formTypes=Event&states=Public&pageIndex=1&pageSize=20`;
 
             const res = await fetch(url, {
                 method: 'GET',
@@ -34,7 +32,8 @@ module.exports = {
                 }
             });
 
-            if (!res.ok) throw new Error(`Erreur HTTP HelloAsso: ${res.status}`);
+            console.log("URL utilisé :", url)
+            if (!res.ok) throw new Error(`Erreur HTTP HelloAsso: ${res.status}, ${res.statusText}`);
 
             const jsonResponse = await res.json();
             const forms = jsonResponse.data;
