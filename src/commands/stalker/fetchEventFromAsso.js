@@ -22,6 +22,7 @@ module.exports = {
                 return interaction.editReply("Impossible de récupérer le token d'accès HelloAsso.");
             }
 
+            const slug = interaction.options.getString('association-slug');
             const url = `${helloAssoUrl}/v5/organizations/${slug}/forms?formTypes=Event&states=Public&pageIndex=1&pageSize=20`;
 
             const res = await fetch(url, {
