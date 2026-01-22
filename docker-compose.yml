@@ -7,6 +7,8 @@ services:
       - .env
     volumes:
       - ./db:/usr/src/app/db
+    ports:
+      - "4001:4001"
     networks:
       - event-stalker-network
 
