@@ -1,0 +1,14 @@
+services:
+  bot:
+    build: .
+    container_name: event-stalker-bot
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./db:/usr/src/app/db
+    networks:
+      - event-stalker-network
+
+networks:
+  - event-stalker-network:
