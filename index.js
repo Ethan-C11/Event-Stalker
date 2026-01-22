@@ -3,9 +3,11 @@ const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const {deployCommands} = require("./deploy-commands");
 const { token, internalPort } = require('./config')
+const {expressSetup} = require("./express-setup");
 
 
 deployCommands()
+expressSetup()
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
