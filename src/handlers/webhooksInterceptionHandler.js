@@ -1,5 +1,5 @@
 const {detailsDataTreatment} = require("./detailsDataTreatment");
-const {detailsEmbedBuilder} = require("./detailsEmbedBuilder");
+const {detailsEmbedBuilder} = require("../utils/detailsEmbedBuilder");
 
 async function webhooksInterceptionHandler(body) {
     const embed =  detailsEmbedBuilder(body.data);

@@ -2,7 +2,7 @@ const { helloAssoUrl } = require("../../config");
 const EventDetailsDTO = require("../objects/dtos/eventDetailsDto");
 const { getTokens } = require("./api-auth/helloAssoAuth");
 const {EmbedBuilder} = require("discord.js");
-const {detailsEmbedBuilder} = require("./detailsEmbedBuilder");
+const {detailsEmbedBuilder} = require("../utils/detailsEmbedBuilder");
 
 async function detailsDataTreatment(associationSlug, eventSlug) {
     try {
