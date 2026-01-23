@@ -19,7 +19,7 @@ async function getTokens() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
+                'accept': 'application/json',
             },
             body: params
         });

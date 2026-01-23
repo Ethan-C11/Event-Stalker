@@ -6,23 +6,25 @@ async function setupNotificationUrl() {
 
     const tokens = await getTokens();
     if (!tokens || !tokens.access_token) {
-        return interaction.editReply("Impossible de récupérer le token d'accès HelloAsso.");
+        throw new Error("Impossible de récupérer le token d'accès HelloAsso.");
     }
 
     let url = `${helloAssoUrl}/v5/partners/me/api-notifications`;
-    if(!isPartner)
-       url = url.concat(`/organizations/${organizationSlug}`) ;
+    console.log(isPartner);
+    if(isPartner === false){
+        console.log('partner is false')
+        url = url.concat(`/organizations/${organizationSlug}`) ;
+    }
 
-
-    const bodyJson = JSON.parse(`{"url": "${webhooksUrl}", "notificationType": "Form"}`)
 
     const options = {
         method: 'PUT',
         headers: {
-            'accept': 'application/json',
-            'Authorization': `Bearer ${tokens.access_token}`
+            accept: 'application/json',
+            'content-type': 'application/json',
+            authorization: `Bearer ${tokens.access_token}`
         },
-        body: bodyJson
+        body: `{"url": "${webhooksUrl}", "notificationType": "Form"}`
     };
 
     fetch(url, options)

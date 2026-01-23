@@ -7,7 +7,7 @@ class EventDetailsDTO {
         this.startDate = data.startDate ? new Date(data.startDate).toLocaleString() : undefined;
         this.endDate = data.endDate ? new Date(data.endDate).toLocaleString() : undefined;
 
-        this.organizationName = data.organizationName ?? this.formatSlug(data.organizationSlug);
+        this.organizationName = data.organizationName;
         this.organizationSlug = data.organizationSlug;
 
         this.location = data.place ? {
