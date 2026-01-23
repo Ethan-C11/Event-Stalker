@@ -2,8 +2,9 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const {deployCommands} = require("./deploy-commands");
-const { token, internalPort } = require('./config')
+const { token, dbFileName} = require('./config')
 const {expressSetup} = require("./express-setup");
+const {drizzle} = require("drizzle-orm/d1");
 
 
 deployCommands()
@@ -40,5 +41,8 @@ for (const file of eventFiles) {
         client.on(event.name, (...args) => event.execute(...args));
     }
 }
+
+const db = drizzle(dbFileName);
+
 
 client.login(token);

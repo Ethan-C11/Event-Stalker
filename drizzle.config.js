@@ -1,8 +1,12 @@
-module.exports = {
+import {defineConfig} from "drizzle-kit";
+const {dbFileName} = require("./config");
+
+export default defineConfig({
     schema: "./db/schema.js",
     out: "./drizzle",
-    driver: "better-sqlite",
+    dialect: "sqlite",
     dbCredentials: {
-        url: "sqlite.db",
+        url: dbFileName,
     },
-};
+});
+

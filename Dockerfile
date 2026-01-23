@@ -5,6 +5,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install --omit=dev
+RUN npx drizzle-kit push
 
 COPY . .
 

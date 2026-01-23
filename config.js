@@ -8,5 +8,6 @@ module.exports = {
     guildId: process.env.GUILD_ID ,
     helloAssoClientId: process.env.HELLOASSO_CLIENT_ID,
     helloAssoClientSecret: process.env.HELLOASSO_CLIENT_SECRET,
-    helloAssoUrl: process.env.HELLOASSO_URL
+    helloAssoUrl: process.env.HELLOASSO_URL,
+    dbFileName: process.env.DB_FILENAME
 };
