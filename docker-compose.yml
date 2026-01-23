@@ -1,5 +1,5 @@
 services:
-  bot:
+  bot-service:
     build: .
     container_name: event-stalker-bot
     restart: always
@@ -13,4 +13,6 @@ services:
       - event-stalker-network
 
 networks:
-  - event-stalker-network:
+  event-stalker-network:
+    driver: bridge
+
