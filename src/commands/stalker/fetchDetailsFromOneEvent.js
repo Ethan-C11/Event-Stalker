@@ -9,22 +9,22 @@ module.exports = {
         .setName('fetch-events-details')
         .setDescription('Fetch details from one event')
         .addStringOption((option) =>
-            option.setName('association-slug') // Correction typo: association
-                .setDescription("Slug of your association")
+            option.setName('organization-slug')
+                .setDescription("Slug of your organization")
                 .setRequired(true)
         )
         .addStringOption((option) =>
-            option.setName('event-slug') // Correction typo: association
+            option.setName('event-slug')
                 .setDescription("Slug of your event")
                 .setRequired(true)
         ),
 
     async execute(interaction) {
         await interaction.deferReply();
-        const associationSlug = interaction.options.getString('association-slug');
+        const organizationSlug = interaction.options.getString('organization-slug');
         const eventSlug = interaction.options.getString('event-slug');
 
-        const treatedDataEmbed = await detailsDataTreatment(associationSlug, eventSlug);
+        const treatedDataEmbed = await detailsDataTreatment(organizationSlug, eventSlug);
 
         return interaction.editReply({ embeds: [treatedDataEmbed] });
     },

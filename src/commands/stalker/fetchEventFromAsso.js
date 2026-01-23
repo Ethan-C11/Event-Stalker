@@ -6,10 +6,10 @@ const {helloAssoUrl} = require("../../../config");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('fetch-events-helloasso')
-        .setDescription('Fetch all active and public events from one HelloAsso association')
+        .setDescription('Fetch all active and public events from one HelloAsso organization')
         .addStringOption((option) =>
-            option.setName('association-slug') // Correction typo: association
-                .setDescription("Slug of your association")
+            option.setName('organization-slug')
+                .setDescription("Slug of your organization")
                 .setRequired(true)
         ),
 
@@ -22,8 +22,8 @@ module.exports = {
                 return interaction.editReply("Impossible de récupérer le token d'accès HelloAsso.");
             }
 
-            const slug = interaction.options.getString('association-slug');
-            const url = `${helloAssoUrl}/v5/organizations/${slug}/forms?formTypes=Event&states=Public&pageIndex=1&pageSize=20`;
+            const organizationSlug = interaction.options.getString('organization-slug');
+            const url = `${helloAssoUrl}/v5/organizations/${organizationSlug}/forms?formTypes=Event&states=Public&pageIndex=1&pageSize=20`;
 
             const res = await fetch(url, {
                 method: 'GET',
@@ -40,7 +40,7 @@ module.exports = {
             const forms = jsonResponse.data;
 
             if (!forms || forms.length === 0) {
-                return interaction.editReply("Aucun événement public trouvé pour cette association.");
+                return interaction.editReply("Aucun événement public trouvé pour cette organization.");
             }
 
             const embeds = forms.slice(0, 5).map(formData => {
