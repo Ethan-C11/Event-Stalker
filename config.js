@@ -10,6 +10,7 @@ const db = drizzle(sqliteDb, { stalker_webhooks_table });
 
 
 module.exports = {
+    env: process.env.ENV,
     token: process.env.TOKEN ,
     clientId: process.env.CLIENT_ID ,
     guildId: process.env.GUILD_ID ,
@@ -17,6 +18,9 @@ module.exports = {
     helloAssoClientSecret: process.env.HELLOASSO_CLIENT_SECRET,
     helloAssoUrl: process.env.HELLOASSO_URL,
     dbFileName: process.env.DB_FILENAME,
-    db: db,
     webhooksUrl: process.env.WEBHOOKS_URL,
+    isPartner: (process.env.IS_PARTNER.toUpperCase() === 'TRUE'),
+    organizationSlug: process.env.ORGANIZATION_SLUG,
+    db: db,
+
 };

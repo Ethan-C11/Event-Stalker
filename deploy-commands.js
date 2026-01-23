@@ -1,7 +1,7 @@
 const { REST, Routes } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const {token, guildId, clientId} = require("./config");
+const {token, guildId, clientId, env} = require("./config");
 
 
 function deployCommands ()  {
@@ -34,9 +34,12 @@ function deployCommands ()  {
         try {
             console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
+            let data;
             // The put method is used to fully refresh all commands in the guild with the current set
-            const data = await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands });
-            // await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands }); // version globale
+            if(env.toUpperCase() === "DEV")
+                data = await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands });
+            else
+                data = await rest.put(Routes.applicationCommands(clientId), { body: commands });
 
 
             console.log(`Successfully reloaded ${data.length} application (/) commands.`);
