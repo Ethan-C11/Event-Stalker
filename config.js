@@ -1,6 +1,13 @@
 if (!process.env.TOKEN) {
     require('dotenv').config();
 }
+const Database = require('better-sqlite3')
+const {drizzle} = require("drizzle-orm/better-sqlite3");
+const sqliteDb = new Database(process.env.DB_FILENAME);
+const stalker_webhooks_table = require('./db/schema');
+
+const db = drizzle(sqliteDb, { stalker_webhooks_table });
+
 
 module.exports = {
     token: process.env.TOKEN ,
@@ -9,5 +16,6 @@ module.exports = {
     helloAssoClientId: process.env.HELLOASSO_CLIENT_ID,
     helloAssoClientSecret: process.env.HELLOASSO_CLIENT_SECRET,
     helloAssoUrl: process.env.HELLOASSO_URL,
-    dbFileName: process.env.DB_FILENAME
+    dbFileName: process.env.DB_FILENAME,
+    db: db
 };

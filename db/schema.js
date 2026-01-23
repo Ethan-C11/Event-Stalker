@@ -1,6 +1,6 @@
 const { sqliteTable, text, int } = require('drizzle-orm/sqlite-core');
 
-export const eventStalkerWebhooks = sqliteTable('stalker_webhooks_table', {
+const stalker_webhooks_table = sqliteTable('stalker_webhooks_table', {
     id: int().primaryKey({ autoIncrement: true }),
     guildId : text().notNull(),
     channelId : text().notNull(),
@@ -8,3 +8,5 @@ export const eventStalkerWebhooks = sqliteTable('stalker_webhooks_table', {
     webhookId : text().notNull(),
     webhookUrl : text().notNull(),
 })
+
+module.exports = {stalker_webhooks_table}
