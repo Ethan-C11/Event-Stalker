@@ -12,8 +12,10 @@ async function webhooksInterceptionHandler(body) {
         .where(eq(stalker_webhooks_table.organizationSlug, body.data.organizationSlug ));
 
     for (const element of relevantWebhooks) {
-        const url = element.webhookUrl.toString();
-        const webhookClient = new WebhookClient({url: url});
+        const webhookClient = new WebhookClient({
+            id: element.webhookId.toString(),
+            token: element.webhookToken.toString(),
+        });
 
         await webhookClient.send({
             embeds: [embed],
