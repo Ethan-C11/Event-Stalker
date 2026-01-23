@@ -3,7 +3,7 @@ if (!process.env.TOKEN) {
 }
 const Database = require('better-sqlite3')
 const {drizzle} = require("drizzle-orm/better-sqlite3");
-const sqliteDb = new Database(process.env.DB_FILENAME);
+const sqliteDb = new Database(`db/${process.env.DB_FILENAME}`);
 const stalker_webhooks_table = require('./db/schema');
 
 const db = drizzle(sqliteDb, { stalker_webhooks_table });
