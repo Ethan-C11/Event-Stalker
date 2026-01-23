@@ -17,5 +17,6 @@ module.exports = {
     helloAssoClientSecret: process.env.HELLOASSO_CLIENT_SECRET,
     helloAssoUrl: process.env.HELLOASSO_URL,
     dbFileName: process.env.DB_FILENAME,
-    db: db
+    db: db,
+    webhooksUrl: process.env.WEBHOOKS_URL,
 };

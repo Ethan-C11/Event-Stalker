@@ -45,7 +45,8 @@ module.exports = {
                 }));
 
                 return interaction.editReply({content: "Webhook créé"})
-            }).catch((error) => {
+            })
+                .catch((error) => {
                 return interaction.editReply(`Une erreur est survenue : ${error.message}`);
             })
 
