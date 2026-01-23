@@ -10,7 +10,7 @@ const {setupNotificationUrl} = require("./src/handlers/setupNotificationUrl");
 deployCommands()
 expressSetup()
 
-//setupNotificationUrl()
+setupNotificationUrl()
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
