@@ -37,7 +37,6 @@ class EventDetailsDTO {
             .map((t, i) => {
                 const label = t.label !== undefined ? t.label : `Tarif ${i+1}`
                 const isFree = t.price.startsWith("0.00");
-                console.log(t.price)
                 const displayPrice = t.price.includes("NaN") ? "Non défini" : (isFree ? "Gratuit" : t.price);
 
                 return `**${label}** : ${displayPrice}`;
