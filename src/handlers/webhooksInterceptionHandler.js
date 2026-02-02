@@ -5,7 +5,15 @@ const {eq} = require("drizzle-orm");
 const { WebhookClient } = require("discord.js");
 
 async function webhooksInterceptionHandler(body) {
-    const embed =  detailsEmbedBuilder(body.data);
+    const data = body.data
+    if(body.eventType !== "From")
+        return
+    if(!data.tiers || data.tiers.length === 0 || data.state === 'Draft')
+        return;
+
+    console.log(data);
+
+    const embed =  detailsEmbedBuilder(data);
 
     const relevantWebhooks = await db.select()
         .from(stalker_webhooks_table)
