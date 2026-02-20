@@ -1,10 +1,10 @@
-const {detailsEmbedBuilder} = require("../../utils/detailsEmbedBuilder");
-const {stalker_webhooks_table} = require("../../../db/schema");
-const {db} = require("../../../config");
+const {detailsEmbedBuilder} = require("../src/utils/detailsEmbedBuilder");
+const {stalker_webhooks_table} = require("../db/schema");
+const {db} = require("../config");
 const {eq} = require("drizzle-orm");
 const { WebhookClient } = require("discord.js");
 
-async function sendEventToDiscordWebhookHandler(data) {
+async function discordWebhookService(data) {
     const embed =  detailsEmbedBuilder(data);
 
     const relevantWebhooks = await db.select()
@@ -24,4 +24,4 @@ async function sendEventToDiscordWebhookHandler(data) {
     }
 }
 
-module.exports = { sendEventToDiscordWebhookHandler };
+module.exports = { sendEventToDiscordWebhookHandler: discordWebhookService };

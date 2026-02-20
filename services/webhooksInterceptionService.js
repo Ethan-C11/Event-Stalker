@@ -1,8 +1,8 @@
-const {stalker_events} = require("../../../db/schema");
-const {db} = require("../../../config");
-const {sendEventToDiscordWebhookHandler} = require("./sendEventToDiscordWebhookHandler");
+const {stalker_events} = require("../db/schema");
+const {db} = require("../config");
+const {sendEventToDiscordWebhookHandler} = require("./discordWebhookService");
 
-async function webhooksInterceptionHandler(body) {
+async function webhooksInterceptionService(body) {
     const data = body.data
     if(body.eventType !== "From" || data.formType !== "Event")
         return
@@ -19,7 +19,7 @@ async function webhooksInterceptionHandler(body) {
     await sendEventToDiscordWebhookHandler(data)
 }
 
-module.exports = { webhooksInterceptionHandler };
+module.exports = { webhooksInterceptionHandler: webhooksInterceptionService };
 
  /**
   * Exemple de JSON : {

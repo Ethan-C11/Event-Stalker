@@ -1,10 +1,10 @@
-const { helloAssoUrl } = require("../../config");
-const EventDetailsDTO = require("../objects/dtos/eventDetailsDto");
-const { getTokens } = require("./api-auth/helloAssoAuth");
+const { helloAssoUrl } = require("../config");
+const EventDetailsDTO = require("../src/objects/dtos/eventDetailsDto");
+const { getTokens } = require("./helloAssoAuth");
 const {EmbedBuilder} = require("discord.js");
-const {detailsEmbedBuilder} = require("../utils/detailsEmbedBuilder");
+const {detailsEmbedBuilder} = require("../src/utils/detailsEmbedBuilder");
 
-async function detailsDataTreatment(associationSlug, eventSlug) {
+async function dataTreatmentService(associationSlug, eventSlug) {
     try {
         const tokens = await getTokens();
         if (!tokens || !tokens.access_token) {
@@ -34,4 +34,4 @@ async function detailsDataTreatment(associationSlug, eventSlug) {
 }
 
 
-module.exports = { detailsDataTreatment };
+module.exports = { detailsDataTreatment: dataTreatmentService };

@@ -1,4 +1,4 @@
-const { getTokens } = require("../../handlers/api-auth/helloAssoAuth");
+const { getTokens } = require("../../../services/helloAssoAuth");
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const EventDTO = require("../../objects/dtos/eventDto");
 const {helloAssoUrl} = require("../../../config");

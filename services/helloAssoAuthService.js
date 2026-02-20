@@ -1,6 +1,6 @@
 const {helloAssoUrl,
     helloAssoClientId,
-    helloAssoClientSecret} = require("../../../config");
+    helloAssoClientSecret} = require("../config");
 
 async function getTokens() {
     if (!helloAssoUrl || !helloAssoClientId || !helloAssoClientSecret) {
