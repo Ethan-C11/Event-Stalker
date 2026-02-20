@@ -8,4 +8,10 @@ const stalker_webhooks_table = sqliteTable('stalker_webhooks_table', {
     guildId: text().notNull()
 })
 
-module.exports = {stalker_webhooks_table}
+const stalker_events = sqliteTable('stalker_events', {
+    id: int().primaryKey({ autoIncrement: true }),
+    organizationSlug : text().notNull(),
+    formSlug: text().notNull(),
+})
+
+module.exports = {stalker_webhooks_table, stalker_events}
