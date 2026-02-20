@@ -1,5 +1,5 @@
-const {stalker_events} = require("../db/schema");
-const {db} = require("../config");
+const {stalker_events} = require("../../db/schema");
+const {db} = require("../../config");
 const {sendEventToDiscordWebhookHandler} = require("./discordWebhookService");
 
 async function webhooksInterceptionService(body) {

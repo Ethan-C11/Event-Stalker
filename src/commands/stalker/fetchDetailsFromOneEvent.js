@@ -1,8 +1,8 @@
-const { getTokens } = require("../../../services/helloAssoAuth");
+const { getTokens } = require("../../services/helloAssoAuth");
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const EventDetailsDTO = require("../../objects/dtos/eventDetailsDto");
 const {helloAssoUrl} = require("../../../config");
-const {detailsDataTreatment} = require("../../../services/dataTreatmentService");
+const {detailsDataTreatment} = require("../../services/dataTreatmentService");
 
 module.exports = {
     data: new SlashCommandBuilder()

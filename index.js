@@ -4,7 +4,7 @@ const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const {deployCommands} = require("./deploy-commands");
 const { token, dbFileName} = require('./config')
 const {expressSetup} = require("./express-setup");
-const {setupNotificationUrl} = require("./services/notificationUrlSetupService");
+const {setupNotificationUrl} = require("./src/services/notificationUrlSetupService");
 
 
 deployCommands()

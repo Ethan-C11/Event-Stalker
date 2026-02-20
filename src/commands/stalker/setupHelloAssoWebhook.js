@@ -1,4 +1,4 @@
-const { getTokens } = require("../../../services/helloAssoAuth");
+const { getTokens } = require("../../services/helloAssoAuth");
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const {db} = require("../../../config");
 const {stalker_webhooks_table} = require("../../../db/schema");

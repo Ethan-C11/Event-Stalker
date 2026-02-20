@@ -1,6 +1,6 @@
-const {detailsEmbedBuilder} = require("../src/utils/detailsEmbedBuilder");
-const {stalker_webhooks_table} = require("../db/schema");
-const {db} = require("../config");
+const {detailsEmbedBuilder} = require("../utils/detailsEmbedBuilder");
+const {stalker_webhooks_table} = require("../../db/schema");
+const {db} = require("../../config");
 const {eq} = require("drizzle-orm");
 const { WebhookClient } = require("discord.js");
 

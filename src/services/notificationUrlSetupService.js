@@ -1,4 +1,4 @@
-const {webhooksUrl, helloAssoUrl, isPartner, organizationSlug} = require("../config");
+const {webhooksUrl, helloAssoUrl, isPartner, organizationSlug} = require("../../config");
 const {getTokens} = require("./helloAssoAuth");
 
 
