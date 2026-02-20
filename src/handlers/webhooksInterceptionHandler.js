@@ -19,7 +19,7 @@ async function webhooksInterceptionHandler(body) {
         return;
     }
 
-    sendEventToDiscordWebhookHandler(data)
+    await sendEventToDiscordWebhookHandler(data)
 }
 
 module.exports = { webhooksInterceptionHandler };
