@@ -7,6 +7,8 @@ function detailsEmbedBuilder(jsonBody) {
     const startDate = event.startDate?.toLocaleString() || undefined;
     const endDate = event.endDate?.toLocaleString() || undefined;
 
+    console.log(jsonBody);
+
     const displayDate = () => {
         if (startDate && endDate)
             return `${startDate} à ${endDate}`;
@@ -14,6 +16,15 @@ function detailsEmbedBuilder(jsonBody) {
             return `${startDate}`
         else
             return "Non précisé"
+    }
+
+    const formattedLocation = () => {
+        if(event.location !== undefined)
+            return event.location?.fullAddress;
+        else if (event.place !== undefined)
+            return (`${event.place.name }, ${event.place.address}, ${event.place.city} ${event.place.zipCode}, ${event.place.country}`)
+        else
+            return "Non spécifié";
     }
 
    return new EmbedBuilder()
@@ -24,13 +35,12 @@ function detailsEmbedBuilder(jsonBody) {
         })
         .setTitle(event.title)
         .setURL(event.url)
-        .setDescription(event.description)
-        .setThumbnail(event.thumbnail)
+        .setDescription(event.description || "Pas de description")
+        .setThumbnail(event.thumbnail || "../images/default-thumbnail.png")
         .addFields(
-            {name: '📍 Lieu', value: event.location?.fullAddress || 'Non spécifié', inline: false},
+            {name: '📍 Lieu', value: formattedLocation() || 'Non spécifié', inline: false},
             {name: '💰 Tarif(s)', value: event.allPricesFormatted, inline: false},
             {name: '📆 Date', value: displayDate(), inline: false},
-            {name: '🏷️ Type', value: event.type, inline: true},
             {name: "🪢 Lien vers l'évènement :", value: event.url, inline: false},
         )
         .setColor("#00ff55")

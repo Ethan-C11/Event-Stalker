@@ -22,7 +22,6 @@ module.exports = {
         const eventSlug = interaction.options.getString('event-slug');
 
         const treatedDataEmbed = await eventDataTreatmentService(organizationSlug, eventSlug);
-
         return interaction.editReply({ embeds: [treatedDataEmbed] });
     },
 };

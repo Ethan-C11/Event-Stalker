@@ -5,11 +5,13 @@ const {getEventDetailsService} = require("./getEventDetailsService");
 async function eventDataTreatmentService(associationSlug, eventSlug) {
     try {
         const eventDetails = await getEventDetailsService(associationSlug,eventSlug)
-        return await detailsEmbedBuilder(eventDetails);
+        const embed = await detailsEmbedBuilder(eventDetails);
+        console.log(embed);
+        return embed;
 
     } catch (error) {
     console.error(error);
-        throw error;
+        throw "dataTreatment: " + error;
     }
 }
 

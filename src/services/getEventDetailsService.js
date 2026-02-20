@@ -23,7 +23,7 @@ async function getEventDetailsService(associationSlug, eventSlug) {
 
     } catch (error) {
         console.error(error);
-        throw error;
+        throw "getEventDetails: " + error;
     }
 }
 
