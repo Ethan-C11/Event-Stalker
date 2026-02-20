@@ -1,8 +1,5 @@
-const { getTokens } = require("../../services/helloAssoAuth");
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const EventDetailsDTO = require("../../objects/dtos/eventDetailsDto");
-const {helloAssoUrl} = require("../../../config");
-const {detailsDataTreatment} = require("../../services/dataTreatmentService");
+const {eventDataTreatmentService} = require("../../services/eventDataTreatmentService");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -24,7 +21,7 @@ module.exports = {
         const organizationSlug = interaction.options.getString('organization-slug');
         const eventSlug = interaction.options.getString('event-slug');
 
-        const treatedDataEmbed = await detailsDataTreatment(organizationSlug, eventSlug);
+        const treatedDataEmbed = await eventDataTreatmentService(organizationSlug, eventSlug);
 
         return interaction.editReply({ embeds: [treatedDataEmbed] });
     },

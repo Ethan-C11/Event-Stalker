@@ -1,4 +1,4 @@
-const { getTokens } = require("../../services/helloAssoAuth");
+const { getTokens } = require("../../services/helloAssoAuthService");
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const EventDTO = require("../../objects/dtos/eventDto");
 const {helloAssoUrl} = require("../../../config");
@@ -71,7 +71,7 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            return interaction.editReply(`Une erreur est survenue : ${error.message}`);
+            return interaction.editReply(`Une erreur est survenue`);
         }
     },
 };

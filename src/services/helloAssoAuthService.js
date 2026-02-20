@@ -15,6 +15,8 @@ async function getTokens() {
     params.append('grant_type', 'client_credentials');
 
     try {
+        // TODO: Tentative avec token actuel et Intégrer la refresh du token en cas de code 401
+
         const res = await fetch(url, {
             method: 'POST',
             headers: {

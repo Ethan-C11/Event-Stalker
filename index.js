@@ -4,7 +4,7 @@ const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const {deployCommands} = require("./deploy-commands");
 const { token, dbFileName} = require('./config')
 const {expressSetup} = require("./express-setup");
-const {setupNotificationUrl} = require("./src/services/notificationUrlSetupService");
+const {notificationUrlSetupService} = require("./src/services/notificationUrlSetupService");
 
 
 deployCommands()
@@ -32,7 +32,7 @@ for (const folder of commandFolders) {
     }
 }
 
-const eventsPath = path.join(__dirname, 'src/handlers/events');
+const eventsPath = path.join(__dirname, 'src/events');
 const eventFiles = fs.readdirSync(eventsPath).filter((file) => file.endsWith('.js'));
 for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file);

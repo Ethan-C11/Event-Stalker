@@ -5,7 +5,7 @@ const {eq} = require("drizzle-orm");
 const { WebhookClient } = require("discord.js");
 
 async function discordWebhookService(data) {
-    const embed =  detailsEmbedBuilder(data);
+    const embed = await detailsEmbedBuilder(data);
 
     const relevantWebhooks = await db.select()
         .from(stalker_webhooks_table)

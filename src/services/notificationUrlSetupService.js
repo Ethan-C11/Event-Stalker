@@ -1,5 +1,5 @@
 const {webhooksUrl, helloAssoUrl, isPartner, organizationSlug} = require("../../config");
-const {getTokens} = require("./helloAssoAuth");
+const {getTokens} = require("./helloAssoAuthService");
 
 
 async function notificationUrlSetupService() {
@@ -32,4 +32,4 @@ async function notificationUrlSetupService() {
         .catch(err => console.error(err));
 }
 
-module.exports = { setupNotificationUrl: notificationUrlSetupService };
+module.exports = { notificationUrlSetupService: notificationUrlSetupService };

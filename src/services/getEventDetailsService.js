@@ -1,10 +1,7 @@
 const { helloAssoUrl } = require("../../config");
-const EventDetailsDTO = require("../objects/dtos/eventDetailsDto");
-const { getTokens } = require("./helloAssoAuth");
-const {EmbedBuilder} = require("discord.js");
-const {detailsEmbedBuilder} = require("../utils/detailsEmbedBuilder");
+const { getTokens } = require("./helloAssoAuthService");
 
-async function dataTreatmentService(associationSlug, eventSlug) {
+async function getEventDetailsService(associationSlug, eventSlug) {
     try {
         const tokens = await getTokens();
         if (!tokens || !tokens.access_token) {
@@ -22,16 +19,13 @@ async function dataTreatmentService(associationSlug, eventSlug) {
 
         if (!res.ok) throw new Error(`Erreur HTTP HelloAsso: ${res.status}`);
 
-        const jsonBody = await res.json();
-        console.log(jsonBody);
-
-        return detailsEmbedBuilder(jsonBody);
+        return await res.json();
 
     } catch (error) {
-    console.error(error);
+        console.error(error);
         throw error;
     }
 }
 
 
-module.exports = { detailsDataTreatment: dataTreatmentService };
+module.exports = { getEventDetailsService: getEventDetailsService };
