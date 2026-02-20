@@ -1,4 +1,4 @@
-const {webhooksInterceptionHandler} = require("./src/handlers/webhooksInterceptionHandler");
+const {webhooksInterceptionHandler} = require("./src/handlers/webhooks/webhooksInterceptionHandler");
 
 function expressSetup() {
     const express = require("express")
