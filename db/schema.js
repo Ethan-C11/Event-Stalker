@@ -14,13 +14,13 @@ const stalker_events = sqliteTable('stalker_events', {
     formSlug: text().notNull(),
 })
 
-const tokens = sqliteTable('tokens', {
+const tokens_db = sqliteTable('tokens_db', {
     id: int().primaryKey({ autoIncrement: true }),
     accessToken : text().notNull(),
     refreshToken: text().notNull(),
     tokenType : text().notNull(),
-    creationDate: text().notNull(),
+    creationDate: text().notNull().default(sql`(CURRENT_TIMESTAMP)`),
     expireInSeconds: int().notNull(),
 })
 
-module.exports = {stalker_webhooks_table, stalker_events, tokens}
+module.exports = {stalker_webhooks_table, stalker_events, tokens_db}

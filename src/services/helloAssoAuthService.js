@@ -1,10 +1,21 @@
 const {helloAssoUrl,
     helloAssoClientId,
-    helloAssoClientSecret} = require("../../config");
+    helloAssoClientSecret, db
+} = require("../../config");
+const {stalker_webhooks_table, tokens_db} = require("../../db/schema");
+const {} = require("drizzle-orm");
 
 async function getTokens() {
     if (!helloAssoUrl || !helloAssoClientId || !helloAssoClientSecret) {
         throw new Error('Variables d\'environnement HelloAsso non définies');
+    }
+
+    const checkIfThereIsAlreadyAToken = async () => {
+        const token = await db.select()
+            .from(tokens_db)
+            .where(sql`datetime(${tokens_db.createdAt}, '+' || ${tokens_db.expireInSeconds} || ' seconds') < datetime('now')`);
+
+        if(token === null ||token === undefined) return false;
     }
 
     const url = `${helloAssoUrl}/oauth2/token`;
