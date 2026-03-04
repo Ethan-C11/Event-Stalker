@@ -16,9 +16,9 @@ const stalker_events = sqliteTable('stalker_events', {
 
 const tokens_db = sqliteTable('tokens_db', {
     id: int().primaryKey({ autoIncrement: true }),
-    accessToken : text().notNull(),
-    refreshToken: text().notNull(),
-    tokenType : text().notNull(),
+    access_token : text().notNull(),
+    refresh_token: text().notNull(),
+    token_type : text().notNull(),
     creationDate: text().notNull().default(sql`(CURRENT_TIMESTAMP)`),
     expireInSeconds: int().notNull(),
 })
