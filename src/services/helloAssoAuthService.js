@@ -49,7 +49,8 @@ async function getTokens() {
 
         } catch (err) {
             console.error('Erreur critique refreshTokens:', err.message);
-            throw err;
+            await db.delete(tokens_db).all()
+            return await getNewToken()
         }
     }
 
