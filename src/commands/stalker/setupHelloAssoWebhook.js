@@ -1,5 +1,5 @@
 const { getTokens } = require("../../services/helloAssoAuthService");
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const {db} = require("../../../config");
 const {stalker_webhooks_table} = require("../../../db/schema");
 
@@ -7,6 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('setup-helloasso-webhook')
         .setDescription('Fetch all active and public events from one HelloAsso association')
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageWebhooks)
         .addStringOption((option) =>
             option.setName('organization-slug') // Correction typo: association
                 .setDescription("Slug of your organization")
