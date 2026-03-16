@@ -32,6 +32,7 @@ async function getTokens() {
             if (!res.ok) {
                 console.error(`Détails de l'erreur (${res.status}):`, textResponse);
                 console.log("Tentative de prendre un nouveau token")
+                await db.delete(tokens_db).all()
                 return await getNewToken()
             }
 
