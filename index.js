@@ -4,7 +4,8 @@ const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const {deployCommands} = require("./deploy-commands");
 const { token, dbFileName} = require('./config')
 const {expressSetup} = require("./express-setup");
-const {notificationUrlSetupService} = require("./src/services/notificationUrlSetupService");
+const cron = require('node-cron');
+const {pollingService} = require("./src/services/pollingService");
 
 
 deployCommands()
@@ -43,5 +44,19 @@ for (const file of eventFiles) {
         client.on(event.name, (...args) => event.execute(...args));
     }
 }
+
+
+client.once('clientReady', () => {
+    console.log('Bot connecté. Lancement du service de polling HelloAsso...');
+
+    cron.schedule('*/30 * * * *', async () => {
+        try {
+            console.log(`[${new Date().toISOString()}] Vérification des nouveaux événements...`);
+            await pollingService();
+        } catch (error) {
+            console.error("Erreur lors du polling HelloAsso :", error);
+        }
+    });
+});
 
 client.login(token);

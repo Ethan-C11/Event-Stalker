@@ -37,12 +37,12 @@ module.exports = {
                 const id = webhook.id.toString();
                 const guildId = webhook.guildId.toString();
 
-                console.log(await db.insert(stalker_webhooks_table).values({
+                await db.insert(stalker_webhooks_table).values({
                     organizationSlug: organizationSlug,
                     webhookId: id,
                     webhookToken: token,
                     guildId: guildId,
-                }));
+                });
 
                 return interaction.editReply({content: "Webhook créé"})
             })

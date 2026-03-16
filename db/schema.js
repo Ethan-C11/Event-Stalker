@@ -1,4 +1,5 @@
 const { sqliteTable, text, int } = require('drizzle-orm/sqlite-core');
+const {sql} = require("drizzle-orm");
 
 const stalker_webhooks_table = sqliteTable('stalker_webhooks_table', {
     id: int().primaryKey({ autoIncrement: true }),
@@ -19,7 +20,7 @@ const tokens_db = sqliteTable('tokens_db', {
     access_token : text().notNull(),
     refresh_token: text().notNull(),
     token_type : text().notNull(),
-    creationDate: text().notNull().default(sql`(CURRENT_TIMESTAMP)`),
+    creationDate: text("creation_date").notNull().default(sql`(CURRENT_TIMESTAMP)`),
     expireInSeconds: int().notNull(),
 })
 

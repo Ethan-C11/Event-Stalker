@@ -12,7 +12,6 @@ async function getTokens() {
 
     const url = `${helloAssoUrl}/oauth2/token`;
 
-
     const refreshToken = async (refreshToken, tokenId) => {
         const params = new URLSearchParams();
         params.append('grant_type', 'refresh_token');
@@ -42,7 +41,7 @@ async function getTokens() {
                 access_token: data.access_token,
                 refresh_token: data.refresh_token,
                 token: data.token_type,
-                expires_in: parseInt(data.expires_in),
+                expireInSeconds: parseInt(data.expires_in),
                 creationDate: sql`(CURRENT_TIMESTAMP)`
             }).where(eq(tokens_db.id, tokenId ))
 
@@ -83,8 +82,8 @@ async function getTokens() {
             await db.insert(tokens_db).values({
                 access_token: data.access_token,
                 refresh_token: data.refresh_token,
-                token: data.token_type,
-                expires_in: parseInt(data.expires_in)
+                token_type: data.token_type,
+                expireInSeconds: parseInt(data.expires_in)
             })
 
             return data;
@@ -97,23 +96,23 @@ async function getTokens() {
 
     const token = await db.select()
         .from(tokens_db)
-        .where(sql`datetime(${tokens_db.createdAt}, '+' || ${tokens_db.expireInSeconds} || ' seconds') < datetime('now')`)
         .limit(1)
         .get();
 
-    if(token === null ||token === undefined) {
-        const token = await db.select()
-            .from(tokens_db)
-            .limit(1)
-            .get()
+    if(!token) {
+        return await getNewToken();
+    }
 
+    const createdDate = new Date(token.creationDate + "Z").getTime();
+    const expiresAt = createdDate + (token.expireInSeconds * 1000);
+    const now = new Date().getTime();
 
-        if(token === null || token === undefined)
-            return await getNewToken()
-        else
-            return await refreshToken(token.refresh_token, token.id)
-    };
-    return token
+    if (now > (expiresAt - 60000)) {
+        console.log("Token expiré ou proche de l'expiration, refresh...");
+        return await refreshToken(token.refresh_token, token.id);
+    }
+
+    return token;
 
 
 }

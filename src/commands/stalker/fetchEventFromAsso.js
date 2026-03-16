@@ -33,7 +33,6 @@ module.exports = {
                 }
             });
 
-            console.log("URL utilisé :", url)
             if (!res.ok) throw new Error(`Erreur HTTP HelloAsso: ${res.status}, ${res.statusText}`);
 
             const jsonResponse = await res.json();

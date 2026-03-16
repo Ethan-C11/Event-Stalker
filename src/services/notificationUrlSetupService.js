@@ -10,9 +10,7 @@ async function notificationUrlSetupService() {
     }
 
     let url = `${helloAssoUrl}/v5/partners/me/api-notifications`;
-    console.log(isPartner);
     if(isPartner === false){
-        console.log('partner is false')
         url = url.concat(`/organizations/${organizationSlug}`) ;
     }
 

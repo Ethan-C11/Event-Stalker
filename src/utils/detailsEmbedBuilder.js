@@ -7,8 +7,6 @@ function detailsEmbedBuilder(jsonBody) {
     const startDate = event.startDate?.toLocaleString() || undefined;
     const endDate = event.endDate?.toLocaleString() || undefined;
 
-    console.log(jsonBody);
-
     const displayDate = () => {
         if (startDate && endDate)
             return `${startDate} à ${endDate}`;

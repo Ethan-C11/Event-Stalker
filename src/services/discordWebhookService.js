@@ -9,7 +9,7 @@ async function discordWebhookService(data) {
 
     const relevantWebhooks = await db.select()
         .from(stalker_webhooks_table)
-        .where(eq(stalker_webhooks_table.organizationSlug, body.data.organizationSlug ));
+        .where(eq(stalker_webhooks_table.organizationSlug, data.organizationSlug ));
 
     for (const element of relevantWebhooks) {
         const webhookClient = new WebhookClient({

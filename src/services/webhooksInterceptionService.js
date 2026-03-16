@@ -4,11 +4,11 @@ const {sendEventToDiscordWebhookHandler} = require("./discordWebhookService");
 
 async function webhooksInterceptionService(body) {
     const data = body.data
-    if(body.eventType !== "From" || data.formType !== "Event")
-        return
-    if(!data.tiers || data.tiers.length === 0 || data.state === 'Draft')
+    if(body.eventType !== "Form" || data.formType !== "Event")
+        return;
+    if(!data.tiers || data.tiers.length === 0 || data.state.toUpperCase() === 'DRAFT')
     {
-        db.insert(stalker_events).values({
+        await db.insert(stalker_events).values({
             organizationSlug: data.organizationSlug,
             formSlug: data.formSlug,
             }
