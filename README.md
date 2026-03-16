@@ -9,3 +9,6 @@ https://dev.helloasso.com/
 
 Doc sandbox/API v5 (spécifications des endpoints)
 https://api.helloasso-sandbox.com/v5/
+
+npx drizzle-kit push
+
