@@ -7,7 +7,8 @@ class EventDetailsDTO {
         this.startDate = data.startDate ? new Date(data.startDate).toLocaleString() : undefined;
         this.endDate = data.endDate ? new Date(data.endDate).toLocaleString() : undefined;
 
-        this.organizationName = data.organizationName ?? this.formatSlug(data.organizationSlug);
+        this.organizationName = data.organizationName;
+        this.organizationSlug = data.organizationSlug;
 
         this.location = data.place ? {
             name: data.place.name,
@@ -33,12 +34,12 @@ class EventDetailsDTO {
         if (this.tiers.length === 0) return "Gratuit / Non renseigné";
 
         return this.tiers
-            .map(t => {
-
+            .map((t, i) => {
+                const label = t.label !== undefined ? t.label : `Tarif ${i+1}`
                 const isFree = t.price.startsWith("0.00");
-                const displayPrice = isFree ? "Gratuit" : t.price;
+                const displayPrice = t.price.includes("NaN") ? "Non défini" : (isFree ? "Gratuit" : t.price);
 
-                return `**${t.label}** : ${displayPrice}`;
+                return `**${label}** : ${displayPrice}`;
             })
             .join('\n');
     }

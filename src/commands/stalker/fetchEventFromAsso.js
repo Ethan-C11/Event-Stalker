@@ -1,4 +1,4 @@
-const { getTokens } = require("../../handlers/api-auth/helloAssoAuth");
+const { getTokens } = require("../../services/helloAssoAuthService");
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const EventDTO = require("../../objects/dtos/eventDto");
 const {helloAssoUrl} = require("../../../config");
@@ -6,10 +6,10 @@ const {helloAssoUrl} = require("../../../config");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('fetch-events-helloasso')
-        .setDescription('Fetch all active and public events from one HelloAsso association')
+        .setDescription('Fetch all active and public events from one HelloAsso organization')
         .addStringOption((option) =>
-            option.setName('association-slug') // Correction typo: association
-                .setDescription("Slug of your association")
+            option.setName('organization-slug')
+                .setDescription("Slug of your organization")
                 .setRequired(true)
         ),
 
@@ -22,8 +22,8 @@ module.exports = {
                 return interaction.editReply("Impossible de récupérer le token d'accès HelloAsso.");
             }
 
-            const slug = interaction.options.getString('association-slug');
-            const url = `${helloAssoUrl}/v5/organizations/${slug}/forms?formTypes=Event&states=Public&pageIndex=1&pageSize=20`;
+            const organizationSlug = interaction.options.getString('organization-slug');
+            const url = `${helloAssoUrl}/v5/organizations/${organizationSlug}/forms?formTypes=Event&states=Public&pageIndex=1&pageSize=20`;
 
             const res = await fetch(url, {
                 method: 'GET',
@@ -33,14 +33,13 @@ module.exports = {
                 }
             });
 
-            console.log("URL utilisé :", url)
             if (!res.ok) throw new Error(`Erreur HTTP HelloAsso: ${res.status}, ${res.statusText}`);
 
             const jsonResponse = await res.json();
             const forms = jsonResponse.data;
 
             if (!forms || forms.length === 0) {
-                return interaction.editReply("Aucun événement public trouvé pour cette association.");
+                return interaction.editReply("Aucun événement public trouvé pour cette organization.");
             }
 
             const embeds = forms.slice(0, 5).map(formData => {
@@ -71,7 +70,7 @@ module.exports = {
 
         } catch (error) {
             console.error(error);
-            return interaction.editReply(`Une erreur est survenue : ${error.message}`);
+            return interaction.editReply(`Une erreur est survenue`);
         }
     },
 };
