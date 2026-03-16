@@ -50,6 +50,7 @@ async function getTokens() {
         } catch (err) {
             console.error('Erreur critique refreshTokens:', err.message);
             await db.delete(tokens_db).all()
+            console.log("Tentative de prendre un nouveau token")
             return await getNewToken()
         }
     }
