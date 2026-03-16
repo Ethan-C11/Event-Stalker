@@ -31,7 +31,8 @@ async function getTokens() {
 
             if (!res.ok) {
                 console.error(`Détails de l'erreur (${res.status}):`, textResponse);
-                throw new Error(`Erreur HTTP ${res.status}: ${textResponse}`);
+                console.log("Tentative de prendre un nouveau token")
+                return await getNewToken()
             }
 
             const data = JSON.parse(textResponse);
