@@ -30,10 +30,8 @@ async function getTokens() {
             const textResponse = await res.text();
 
             if (!res.ok) {
-                console.error(`Détails de l'erreur (${res.status}):`, textResponse);
-                console.log("Tentative de prendre un nouveau token")
-                await db.delete(tokens_db).all()
-                return await getNewToken()
+                console.warn("Refresh token invalide ou expiré, génération d'un nouveau...");
+                return await getNewToken();
             }
 
             const data = JSON.parse(textResponse);
@@ -50,9 +48,7 @@ async function getTokens() {
             return data;
 
         } catch (err) {
-            console.error('Erreur critique refreshTokens:', err.message);
-            await db.delete(tokens_db).all()
-            console.log("Tentative de prendre un nouveau token")
+            console.warn('Erreur critique refreshTokens:', err.message);
             return await getNewToken()
         }
     }
@@ -64,6 +60,9 @@ async function getTokens() {
         params.append('grant_type', 'client_credentials');
 
         try {
+
+            await db.delete(tokens_db);
+
             const res = await fetch(url, {
                 method: 'POST',
                 headers: {
