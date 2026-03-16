@@ -10,6 +10,7 @@
   "private": true,
   "dependencies": {
     "@discordjs/rest": "^2.6.0",
+    "@ovh-api/api": "^4.2.0",
     "better-sqlite3": "^12.6.2",
     "body-parser": "^2.2.2",
     "discord-api-types": "^0.38.37",

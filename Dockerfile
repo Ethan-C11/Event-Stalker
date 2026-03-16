@@ -1,14 +1,21 @@
-FROM node:20-alpine
-
+FROM node:20-alpine AS builder
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+COPY drizzle.config.js ./
 
-RUN npm install --omit=dev
-RUN npx drizzle-kit push
-
+RUN npm install
 COPY . .
+
+FROM node:20-alpine
+WORKDIR /usr/src/app
+
+COPY --from=builder /usr/src/app/package*.json ./
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app .
+
+RUN npm prune --omit=dev
 
 EXPOSE 4001
 
-CMD ["node", "index.js"]
+CMD ["sh", "-c", "npx drizzle-kit push && node index.js"]
