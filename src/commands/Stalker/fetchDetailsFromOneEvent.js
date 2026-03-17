@@ -4,7 +4,7 @@ const {eventDataTreatmentService} = require("../../services/eventDataTreatmentSe
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('fetch-events-details')
-        .setDescription("Affiche les détails d'un évenement.")
+        .setDescription("Affiche les détails d'un évènement.")
         .addStringOption((option) =>
             option.setName('organization-slug')
                 .setDescription("le Slug de l'association, disponible dans l'url après '/associations/'")
@@ -12,7 +12,7 @@ module.exports = {
         )
         .addStringOption((option) =>
             option.setName('event-slug')
-                .setDescription("Le slug de l'évenement, disponible dans l'url après '/evenements/'")
+                .setDescription("Le slug de l'évènement, disponible dans l'url après '/evenements/'")
                 .setRequired(true)
         ),
 
