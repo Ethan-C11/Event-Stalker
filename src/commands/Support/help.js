@@ -50,7 +50,7 @@ module.exports = {
             .setDescription("Voici toutes les commandes disponibles triées par catégorie.")
             .addFields(fields)
             .setColor("#883400")
-            .setFooter({ text: "Event Stalker • Aide" })
+            .setFooter({text: "Event Stalker • Aide"})
             .setTimestamp();
 
         return interaction.editReply({ embeds: [embed] });
