@@ -6,16 +6,16 @@ const {stalker_webhooks_table} = require("../../../db/schema");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('setup-helloasso-webhook')
-        .setDescription('Fetch all active and public events from one HelloAsso association')
+        .setDescription("Met en place les alertes lors de la création d'un évenement publique")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageWebhooks)
         .addStringOption((option) =>
-            option.setName('organization-slug') // Correction typo: association
-                .setDescription("Slug of your organization")
+            option.setName('organization-slug')
+                .setDescription("le Slug de l'association, disponible dans l'url après '/associations/'")
                 .setRequired(true)
         )
         .addChannelOption((option) =>
             option.setName('target-channel')
-                .setDescription("Channel in which you want your alert to be sent to")
+                .setDescription("Channel où les notifications seront envoyées")
                 .setRequired(true)
     ),
 

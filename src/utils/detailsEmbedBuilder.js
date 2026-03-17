@@ -41,7 +41,8 @@ function detailsEmbedBuilder(jsonBody) {
             {name: '📆 Date', value: displayDate(), inline: false},
             {name: "🪢 Lien vers l'évènement :", value: event.url, inline: false},
         )
-        .setColor("#00ff55")
+       .setFooter({ text: "Event Stalker • Evenements" })
+       .setColor("#00ff55")
         .setTimestamp(event.createdAt);
 }
 
