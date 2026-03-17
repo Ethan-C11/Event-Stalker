@@ -42,7 +42,9 @@ module.exports = {
                 return interaction.editReply("Aucun événement public trouvé pour cette organization.");
             }
 
-            const embeds = forms.slice(0, 5).map(formData => {
+            const embeds = forms.slice(0, 5).filter(formData =>
+                new Date(formData.endDate) > new Date()
+            ).map(formData => {
                 const event = new EventDTO(formData);
 
                 const formattedSlug = event.organizationSlug
