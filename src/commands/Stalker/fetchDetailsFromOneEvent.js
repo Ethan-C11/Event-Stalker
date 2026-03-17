@@ -1,18 +1,18 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const {eventDataTreatmentService} = require("../../services/eventDataTreatmentService");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('fetch-events-details')
-        .setDescription('Fetch details from one event')
+        .setDescription("Affiche les détails d'un évenement.")
         .addStringOption((option) =>
             option.setName('organization-slug')
-                .setDescription("Slug of your organization")
+                .setDescription("le Slug de l'association, disponible dans l'url après '/associations/'")
                 .setRequired(true)
         )
         .addStringOption((option) =>
             option.setName('event-slug')
-                .setDescription("Slug of your event")
+                .setDescription("Le slug de l'évenement, disponible dans l'url après '/evenements/'")
                 .setRequired(true)
         ),
 
