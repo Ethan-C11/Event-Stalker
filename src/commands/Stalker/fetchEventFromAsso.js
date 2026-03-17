@@ -6,7 +6,7 @@ const {helloAssoUrl} = require("../../../config");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('fetch-events-helloasso')
-        .setDescription("Affiche un résumé de tout les évenements publiques à venir d'une association")
+        .setDescription("Affiche un résumé de tout les évènements publiques à venir d'une association")
         .addStringOption((option) =>
             option.setName('organization-slug')
                 .setDescription("le Slug de l'association, disponible dans l'url après '/associations/'")

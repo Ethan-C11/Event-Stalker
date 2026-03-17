@@ -6,7 +6,7 @@ const {stalker_webhooks_table} = require("../../../db/schema");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('setup-helloasso-webhook')
-        .setDescription("Met en place les alertes lors de la création d'un évenement publique")
+        .setDescription("Met en place les alertes lors de la création d'un évènement publique")
         .setDefaultMemberPermissions(PermissionFlagsBits.ManageWebhooks)
         .addStringOption((option) =>
             option.setName('organization-slug')

@@ -9,9 +9,9 @@ function detailsEmbedBuilder(jsonBody) {
 
     const displayDate = () => {
         if (startDate && endDate)
-            return `${startDate} à ${endDate}`;
+            return `${startDate.toLocaleString()} à ${endDate.toLocaleString()}`;
         else if (startDate && !endDate)
-            return `${startDate}`
+            return `${startDate.toLocaleString()}`
         else
             return "Non précisé"
     }
