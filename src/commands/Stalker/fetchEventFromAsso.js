@@ -6,7 +6,7 @@ const {helloAssoUrl} = require("../../../config");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('fetch-events-helloasso')
-        .setDescription("Affiche un résumé de tout les évenements publiques à venir d'une association")
+        .setDescription("Affiche un résumé de tout les évènements publiques à venir d'une association")
         .addStringOption((option) =>
             option.setName('organization-slug')
                 .setDescription("le Slug de l'association, disponible dans l'url après '/associations/'")
@@ -42,7 +42,9 @@ module.exports = {
                 return interaction.editReply("Aucun événement public trouvé pour cette organization.");
             }
 
-            const embeds = forms.slice(0, 5).map(formData => {
+            const embeds = forms.slice(0, 5).filter(formData =>
+                new Date(formData.endDate) > new Date()
+            ).map(formData => {
                 const event = new EventDTO(formData);
 
                 const formattedSlug = event.organizationSlug
