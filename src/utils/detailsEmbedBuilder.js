@@ -1,17 +1,28 @@
 const {EmbedBuilder} = require("discord.js");
 const EventDetailsDTO = require("../objects/dtos/eventDetailsDto");
 const {helloAssoUrl} = require("../../config");
+const dayjs = require('dayjs');
+const customParseFormat = require('dayjs/plugin/customParseFormat');
+dayjs.extend(customParseFormat);
 
 function detailsEmbedBuilder(jsonBody) {
     const event = new EventDetailsDTO(jsonBody);
-    const startDate = event.startDate?.toLocaleString() || undefined;
-    const endDate = event.endDate?.toLocaleString() || undefined;
+    const inputFormat = "DD/MM/YYYY HH:mm:ss";
 
+    const parseDate = (dateStr) => {
+        if (!dateStr) return null;
+        const d = dayjs(dateStr, inputFormat);
+        return d.isValid() ? d : null;
+    };
+
+    const startDate = parseDate(event.startDate);
+    const endDate =  parseDate(event.endDate);
     const displayDate = () => {
+        const outputFormat = "DD/MM/YYYY [-] HH:mm";
         if (startDate && endDate)
-            return `${startDate.toLocaleString()} à ${endDate.toLocaleString()}`;
+            return `du ${startDate.format(outputFormat)} au ${endDate.format(outputFormat)}`;
         else if (startDate && !endDate)
-            return `${startDate.toLocaleString()}`
+            return `${startDate.format(outputFormat)}`
         else
             return "Non précisé"
     }
