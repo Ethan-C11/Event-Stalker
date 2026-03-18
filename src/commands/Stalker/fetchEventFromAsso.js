@@ -46,11 +46,19 @@ module.exports = {
                 new Date(formData.endDate) > new Date()
             ).map(formData => {
                 const event = new EventDTO(formData);
-
                 const formattedSlug = event.organizationSlug
                     .split('-')
                     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                     .join(' ');
+
+                const displayDate = () => {
+                    if (event.startDate && event.endDate)
+                        return `du ${event.startDate} au ${event.endDate}`;
+                    else if (event.startDate && !event.endDate)
+                        return `${event.startDate}`
+                    else
+                        return "Non précisé"
+                }
 
                 return new EmbedBuilder()
                     .setAuthor({
@@ -61,8 +69,8 @@ module.exports = {
                     .setURL(event.url)
                     .setDescription(event.description || "Pas de description")
                     .addFields(
-                        { name: "Lien vers l'évènement :", value: event.url, inline: false},
-                            { name: "Date de création", value: event.meta.createdAt ? event.meta.createdAt.toLocaleString() : "Inconnue", inline: false
+                        { name: "🪢Lien vers l'évènement :", value: event.url, inline: false},
+                            { name: "📅Date de l'évènement", value: displayDate(), inline: false
                             })
                     .setColor("#00ff55")
                     .setTimestamp();
