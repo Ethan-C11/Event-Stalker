@@ -17,10 +17,14 @@ module.exports = {
             option.setName('target-channel')
                 .setDescription("Channel où les notifications seront envoyées")
                 .setRequired(true)
-    ),
+        )
+        .addBooleanOption((option) =>
+            option.setName('description-only')
+                .setDescription("Affiche uniquement la description de l'évènement")
+        ),
 
     async execute(interaction) {
-        await interaction.deferReply();
+        await interaction.deferReply({ephemeral: true});
 
         try {
             const tokens = await getTokens();
@@ -30,6 +34,8 @@ module.exports = {
 
             const organizationSlug = interaction.options.getString('organization-slug');
             const targetChannel = interaction.options.getChannel('target-channel');
+            const descOnly = interaction.options.getBoolean('description-only') ?? false;
+
             targetChannel.createWebhook({
                 name: `Event Stalker ${organizationSlug}`,
                 avatar : 'https://i.imgur.com/soSow0B.png'
@@ -43,11 +49,13 @@ module.exports = {
                     webhookId: id,
                     webhookToken: token,
                     guildId: guildId,
+                    descOnly: descOnly ? 1 : 0,
                 });
 
                 return interaction.editReply({content: "Webhook créé"})
             })
                 .catch((error) => {
+                    console.error(error);
                 return interaction.editReply(`Une erreur est survenue`);
             })
 
