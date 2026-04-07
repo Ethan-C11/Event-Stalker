@@ -14,14 +14,19 @@ module.exports = {
             option.setName('event-slug')
                 .setDescription("Le slug de l'évènement, disponible dans l'url après '/evenements/'")
                 .setRequired(true)
+        )
+        .addBooleanOption((option) =>
+            option.setName('description-only')
+                .setDescription("Affiche uniquement la description de l'évènement")
         ),
 
-    async execute(interaction) {
+     async execute(interaction) {
         await interaction.deferReply();
         const organizationSlug = interaction.options.getString('organization-slug');
         const eventSlug = interaction.options.getString('event-slug');
+        const descOnly = interaction.options.getBoolean('description-only') ?? false;
 
-        const treatedDataEmbed = await eventDataTreatmentService(organizationSlug, eventSlug);
-        return interaction.editReply({ embeds: [treatedDataEmbed] });
+        const treatedDataEmbed = await eventDataTreatmentService(organizationSlug, eventSlug, descOnly);
+        return interaction.editReply({embeds: [treatedDataEmbed]});
     },
 };

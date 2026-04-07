@@ -5,8 +5,27 @@ const dayjs = require('dayjs');
 const customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
 
-function detailsEmbedBuilder(jsonBody) {
+function detailsEmbedBuilder(jsonBody, descOnly) {
     const event = new EventDetailsDTO(jsonBody);
+
+    if(descOnly === true) {
+        return new EmbedBuilder()
+            .setAuthor({
+                name: event.organizationName,
+                url: `${helloAssoUrl}/associations/${event.organizationSlug}/`,
+                iconURL: "https://i.imgur.com/soSow0B.png",
+            })
+            .setTitle(event.title)
+            .setURL(event.url)
+            .setDescription(event.description || "Pas de description")
+            .setThumbnail(event.thumbnail || "../images/default-thumbnail.png")
+            .addFields(
+                {name: "🪢 Lien vers l'évènement :", value: event.url, inline: false},
+            )
+            .setFooter({ text: "Event Stalker • Evenements" })
+            .setColor("#00ff55")
+            .setTimestamp(event.createdAt);
+    }
     const inputFormat = "DD/MM/YYYY HH:mm:ss";
 
     const parseDate = (dateStr) => {

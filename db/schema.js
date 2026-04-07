@@ -1,12 +1,14 @@
 const { sqliteTable, text, int } = require('drizzle-orm/sqlite-core');
 const {sql} = require("drizzle-orm");
+const {integer} = require("drizzle-orm/pg-core");
 
 const stalker_webhooks_table = sqliteTable('stalker_webhooks_table', {
     id: int().primaryKey({ autoIncrement: true }),
     organizationSlug : text().notNull(),
     webhookId : text().notNull(),
     webhookToken : text().notNull(),
-    guildId: text().notNull()
+    guildId: text().notNull(),
+    descOnly: integer().default(0).notNull(), // 0 = false
 })
 
 const stalker_events = sqliteTable('stalker_events', {
