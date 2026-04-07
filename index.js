@@ -49,7 +49,7 @@ for (const file of eventFiles) {
 client.once('clientReady', () => {
     console.log('Bot connecté. Lancement du service de polling HelloAsso...');
 
-    cron.schedule('*/30 * * * *', async () => {
+    cron.schedule('*/5 * * * *', async () => {
         try {
             console.log(`[${new Date().toISOString()}] Vérification des nouveaux événements...`);
             await pollingService();

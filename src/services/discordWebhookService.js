@@ -5,11 +5,13 @@ const {eq} = require("drizzle-orm");
 const { WebhookClient } = require("discord.js");
 
 async function discordWebhookService(data) {
-    const embed = await detailsEmbedBuilder(data);
 
     const relevantWebhooks = await db.select()
         .from(stalker_webhooks_table)
         .where(eq(stalker_webhooks_table.organizationSlug, data.organizationSlug ));
+
+    const embed = await detailsEmbedBuilder(data, false);
+    const descOnlyEmbed = await detailsEmbedBuilder(data, true)
 
     for (const element of relevantWebhooks) {
         const webhookClient = new WebhookClient({
@@ -17,8 +19,13 @@ async function discordWebhookService(data) {
             token: element.webhookToken.toString(),
         });
 
+        let embedToSend;
+        if(element.descOnly === 1)
+            embedToSend = descOnlyEmbed;
+        else embedToSend = embed;
+
         await webhookClient.send({
-            embeds: [embed],
+            embeds: [embedToSend],
             avatarURL: 'https://i.imgur.com/soSow0B.png'
         });
     }
