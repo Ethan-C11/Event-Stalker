@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 4001
 
-CMD ["sh", "-c", "npx drizzle-kit push && node index.js"]
+CMD ["sh", "-c", "npx drizzle-kit push --force && node index.js"]
